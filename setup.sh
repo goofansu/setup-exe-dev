@@ -28,7 +28,7 @@ fi
 node --version
 npm --version
 
-# Install global Codex skills.
+# Install global pi skills.
 npx skills add mattpocock/skills/skills/engineering -s tdd -s code-review -a pi -g -y
 npx skills add mattpocock/skills/skills/productivity -s handoff -a pi -g -y
 npx skills add herdrdev/herdr -s herdr -a pi -g -y
@@ -38,10 +38,11 @@ pi install https://github.com/goofansu/pi-subagent
 
 # Install the Herdr configuration.
 mkdir -p "$HOME/.config/herdr"
-install -m 0644 "$SCRIPT_DIR/config/herdr.toml" "$HOME/.config/herdr/config.toml"
+install -m 0644 "$SCRIPT_DIR/config/herdr/config.toml" "$HOME/.config/herdr/config.toml"
 
-# Install pi agent definitions.
+# Install the pi configuration.
 mkdir -p "$HOME/.pi/agent/agents"
-install -m 0644 "$SCRIPT_DIR"/agents/*.md "$HOME/.pi/agent/agents/"
+install -m 0644 "$SCRIPT_DIR"/config/pi/agents/*.md "$HOME/.pi/agent/agents/"
+install -m 0644 "$SCRIPT_DIR/config/pi/keybindings.json" "$HOME/.pi/agent/keybindings.json"
 
 printf '%s\n' 'Setup complete.'
