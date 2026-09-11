@@ -40,6 +40,7 @@ npx skills add boldsoftware/exe.dev -s using-exe-dev -a pi -g -y
 pi install https://github.com/goofansu/pi-stuff
 pi install https://github.com/goofansu/pi-subagent
 pi install https://github.com/goofansu/pi-web
+pi install https://github.com/davebcn87/pi-autoresearch
 
 # Install the Herdr configuration.
 mkdir -p "$HOME/.config/herdr"
