@@ -3,22 +3,34 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
-# Install nvm and Node.js 24.
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.7/install.sh | bash
+# Install Node.js 24 only when it is not already available.
+if command -v node >/dev/null 2>&1 && [[ "$(node --version)" == v24.* ]]; then
+  printf 'Node.js 24 is already installed: %s\n' "$(node --version)"
+else
+  export NVM_DIR="$HOME/.nvm"
 
-# Load nvm without restarting the shell.
-export NVM_DIR="$HOME/.nvm"
-# shellcheck source=/dev/null
-\. "$NVM_DIR/nvm.sh"
+  if [[ ! -s "$NVM_DIR/nvm.sh" ]]; then
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.7/install.sh | bash
+  fi
 
-nvm install 24
+  # Load nvm without restarting the shell.
+  # shellcheck source=/dev/null
+  \. "$NVM_DIR/nvm.sh"
 
-# Verify the installed versions.
-node -v # Expected: v24.21.0
-npm -v  # Expected: 11.19.0
+  if nvm version 24 >/dev/null 2>&1; then
+    nvm use 24
+  else
+    nvm install 24
+  fi
+fi
+
+# Report the versions in use.
+node --version
+npm --version
 
 # Install global Codex skills.
 npx skills add mattpocock/skills/skills/engineering -s tdd -s code-review -a pi -g -y
+npx skills add mattpocock/skills/skills/productivity -s handoff -a pi -g -y
 npx skills add herdrdev/herdr -s herdr -a pi -g -y
 
 # Install the pi-subagent extension.
