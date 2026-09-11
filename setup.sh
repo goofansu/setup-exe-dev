@@ -29,10 +29,12 @@ node --version
 npm --version
 
 # Install global pi skills.
-npx skills add boldsoftware/exe.dev -s using-exe-dev -a pi -g -y
+npx skills add goofansu/skills/skills/engineering -a pi -g -y
 npx skills add mattpocock/skills/skills/engineering -s tdd -s code-review -a pi -g -y
 npx skills add mattpocock/skills/skills/productivity -s handoff -a pi -g -y
 npx skills add herdrdev/herdr -s herdr -a pi -g -y
+npx skills add humanlayer/skills -s show-me -a pi -g -y
+npx skills add boldsoftware/exe.dev -s using-exe-dev -a pi -g -y
 
 # Install the pi extensions.
 pi install https://github.com/goofansu/pi-web
