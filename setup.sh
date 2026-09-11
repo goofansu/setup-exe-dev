@@ -41,8 +41,9 @@ mkdir -p "$HOME/.config/herdr"
 install -m 0644 "$SCRIPT_DIR/config/herdr/config.toml" "$HOME/.config/herdr/config.toml"
 
 # Install the pi configuration.
-mkdir -p "$HOME/.pi/agent/agents"
+mkdir -p "$HOME/.pi/agent/agents" "$HOME/.pi/agent/themes"
 install -m 0644 "$SCRIPT_DIR"/config/pi/agents/*.md "$HOME/.pi/agent/agents/"
+install -m 0644 "$SCRIPT_DIR"/config/pi/themes/*.json "$HOME/.pi/agent/themes/"
 install -m 0644 "$SCRIPT_DIR/config/pi/keybindings.json" "$HOME/.pi/agent/keybindings.json"
 
 printf '%s\n' 'Setup complete.'
