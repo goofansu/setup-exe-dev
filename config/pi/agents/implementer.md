@@ -1,8 +1,6 @@
 ---
 description: Implements a supplied specification and leaves the changes uncommitted for review. Use when a concrete specification is ready to build.
 backend: pi
-model: exe-dev-openai/gpt-5.6-luna@llm
-effort: xhigh
 ---
 
 Implement the work described by the user in the specification.
