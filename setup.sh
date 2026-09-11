@@ -37,8 +37,9 @@ npx skills add humanlayer/skills -s show-me -a pi -g -y
 npx skills add boldsoftware/exe.dev -s using-exe-dev -a pi -g -y
 
 # Install the pi extensions.
-pi install https://github.com/goofansu/pi-web
+pi install https://github.com/goofansu/pi-stuff
 pi install https://github.com/goofansu/pi-subagent
+pi install https://github.com/goofansu/pi-web
 
 # Install the Herdr configuration.
 mkdir -p "$HOME/.config/herdr"
@@ -48,6 +49,5 @@ install -m 0644 "$SCRIPT_DIR/config/herdr/config.toml" "$HOME/.config/herdr/conf
 mkdir -p "$HOME/.pi/agent/agents" "$HOME/.pi/agent/themes"
 install -m 0644 "$SCRIPT_DIR"/config/pi/agents/*.md "$HOME/.pi/agent/agents/"
 install -m 0644 "$SCRIPT_DIR"/config/pi/themes/*.json "$HOME/.pi/agent/themes/"
-install -m 0644 "$SCRIPT_DIR/config/pi/keybindings.json" "$HOME/.pi/agent/keybindings.json"
 
 printf '%s\n' 'Setup complete.'
