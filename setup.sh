@@ -34,7 +34,8 @@ npx skills add mattpocock/skills/skills/engineering -s tdd -s code-review -a pi 
 npx skills add mattpocock/skills/skills/productivity -s handoff -a pi -g -y
 npx skills add herdrdev/herdr -s herdr -a pi -g -y
 
-# Install the pi-subagent extension.
+# Install the pi extensions.
+pi install https://github.com/goofansu/pi-web
 pi install https://github.com/goofansu/pi-subagent
 
 # Install the Herdr configuration.
