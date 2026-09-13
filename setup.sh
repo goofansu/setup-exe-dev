@@ -35,7 +35,7 @@ make -C /tmp/skills setup-exe-dev
 
 # Install the pi extensions.
 pi install https://github.com/goofansu/pi-stuff
-pi install https://github.com/goofansu/pi-subagent
+pi install npm:@goofansu/pi-subagent
 pi install https://github.com/goofansu/pi-web
 pi install https://github.com/davebcn87/pi-autoresearch
 
