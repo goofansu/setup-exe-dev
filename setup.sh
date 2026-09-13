@@ -34,10 +34,10 @@ git clone --depth 1 https://github.com/goofansu/skills.git /tmp/skills
 make -C /tmp/skills setup-exe-dev
 
 # Install the pi extensions.
-pi install https://github.com/goofansu/pi-stuff
 pi install npm:@goofansu/pi-subagent
+pi install npm:pi-autoresearch
+pi install https://github.com/goofansu/pi-stuff
 pi install https://github.com/goofansu/pi-web
-pi install https://github.com/davebcn87/pi-autoresearch
 
 # Install the Herdr configuration.
 mkdir -p "$HOME/.config/herdr"
