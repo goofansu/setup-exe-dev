@@ -28,23 +28,13 @@ fi
 node --version
 npm --version
 
-# Install global pi skills.
-rm -rf /tmp/skills
-git clone --depth 1 https://github.com/goofansu/skills.git /tmp/skills
-make -C /tmp/skills setup-exe-dev
-
-# Install the pi extensions.
-pi install npm:@goofansu/pi-subagent
-pi install npm:pi-autoresearch
-pi install https://github.com/goofansu/pi-stuff
-pi install https://github.com/goofansu/pi-web
+# Install the pi skills and extensions.
+rm -rf /tmp/pi-stuff
+git clone --depth 1 https://github.com/goofansu/pi-stuff.git /tmp/pi-stuff
+make -C /tmp/pi-stuff install-exe-dev
 
 # Install the Herdr configuration.
 mkdir -p "$HOME/.config/herdr"
 install -m 0644 "$SCRIPT_DIR/config/herdr/config.toml" "$HOME/.config/herdr/config.toml"
-
-# Install the pi keybindings.
-mkdir -p "$HOME/.pi/agent"
-install -m 0644 "$SCRIPT_DIR/config/pi/keybindings.json" "$HOME/.pi/agent/keybindings.json"
 
 printf '%s\n' 'Setup complete.'
