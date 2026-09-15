@@ -3,26 +3,22 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
-# Install Node.js 24 if it is not already available.
-if command -v node >/dev/null 2>&1 && [[ "$(node --version)" == v24.* ]]; then
-	printf 'Node.js 24 is already installed: %s\n' "$(node --version)"
+# Install the latest Node.js LTS release if it is not already available.
+export PATH="$HOME/.local/bin:$PATH"
+NODE_ENV="$HOME/node"
+
+if [[ -x "$NODE_ENV/bin/node" && -x "$NODE_ENV/bin/npm" && -x "$NODE_ENV/bin/npx" ]]; then
+	printf 'Node.js is already installed: %s\n' "$("$NODE_ENV/bin/node" --version)"
 else
-	export NVM_DIR="$HOME/.nvm"
-
-	if [[ ! -s "$NVM_DIR/nvm.sh" ]]; then
-		curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.7/install.sh | bash
-	fi
-
-	# Load nvm without restarting the shell.
-	# shellcheck source=/dev/null
-	source "$NVM_DIR/nvm.sh"
-
-	if nvm version 24 >/dev/null 2>&1; then
-		nvm use 24
-	else
-		nvm install 24
-	fi
+	rm -rf "$NODE_ENV"
+	uvx nodeenv -n lts "$NODE_ENV"
 fi
+
+mkdir -p "$HOME/.local/bin"
+for executable in node npm npx; do
+	ln -sfn "$NODE_ENV/bin/$executable" "$HOME/.local/bin/$executable"
+done
+hash -r
 
 # Report the active versions.
 node --version
