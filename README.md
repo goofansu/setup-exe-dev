@@ -30,11 +30,10 @@ ssh exe.dev defaults delete dev.exe new.setup-script
 Create one VM with `bootstrap.sh` without changing your default setup script:
 
 ```sh
-cat bootstrap.sh | ssh exe.dev new --name my-vm --setup-script /dev/stdin
+cat bootstrap.sh | ssh exe.dev new --setup-script /dev/stdin
 ```
 
-Replace `my-vm` with the name of the VM. The VM runs the script once during its
-initial setup.
+The VM runs the script once during its initial setup.
 
 ## Run directly on an existing VM
 
