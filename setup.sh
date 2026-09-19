@@ -24,10 +24,6 @@ hash -r
 node --version
 npm --version
 
-# Install Herdr configuration.
-mkdir -p "$HOME/.config/herdr"
-install -m 0644 "$SCRIPT_DIR/config/herdr/config.toml" "$HOME/.config/herdr/config.toml"
-
 # Install Pi configuration.
 mkdir -p "$HOME/.pi/agent"
 install -m 0644 "$SCRIPT_DIR/config/pi/keybindings.json" "$HOME/.pi/agent/keybindings.json"
