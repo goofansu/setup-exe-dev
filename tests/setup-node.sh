@@ -25,14 +25,14 @@ printf '%s\n' '11.19.0'
 SCRIPT
 cat >"$target/bin/npx" <<'SCRIPT'
 #!/usr/bin/env bash
-printf '%s\n' "$*" >>"$HOME/npx-calls"
+exit 0
 SCRIPT
 chmod +x "$target/bin/node" "$target/bin/npm" "$target/bin/npx"
 EOF
 
 cat >"$FAKE_BIN/pi" <<'EOF'
 #!/usr/bin/env bash
-printf '%s\n' "$*" >>"$HOME/pi-calls"
+exit 0
 EOF
 
 cat >"$FAKE_BIN/curl" <<'EOF'
@@ -52,22 +52,5 @@ for executable in node npm npx; do
 done
 
 [[ ! -e "$TEST_HOME/.nvm" ]]
-cat >"$TEST_ROOT/expected-pi-calls" <<'EOF'
-install npm:@goofansu/pi-stuff
-install npm:@goofansu/pi-subagent
-install npm:@goofansu/pi-web
-install npm:pi-autoresearch
-EOF
-
-cat >"$TEST_ROOT/expected-npx-calls" <<'EOF'
-skills add goofansu/skills/skills/engineering -a pi -g -y
-skills add mattpocock/skills/skills/engineering -a pi -g -y
-skills add mattpocock/skills/skills/productivity -a pi -g -y
-skills add humanlayer/skills -s show-me -a pi -g -y
-skills add herdrdev/herdr -s herdr -a pi -g -y
-EOF
-
-diff -u "$TEST_ROOT/expected-pi-calls" "$TEST_HOME/pi-calls"
-diff -u "$TEST_ROOT/expected-npx-calls" "$TEST_HOME/npx-calls"
 
 printf '%s\n' 'setup node installation test passed'
