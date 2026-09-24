@@ -38,7 +38,7 @@ pi install npm:pi-autoresearch
 npx skills add goofansu/skills/skills/engineering -a pi -g -y
 npx skills add mattpocock/skills/skills/engineering -a pi -g -y
 npx skills add mattpocock/skills/skills/productivity -a pi -g -y
-npx skills add humanlayer/skills -s show-me -a pi -g -y
+npx skills add humanlayer/skills -s show-me -s visual-pr -a pi -g -y
 npx skills add herdrdev/herdr -s herdr -a pi -g -y
 
 printf '%s\n' 'Setup complete.'
