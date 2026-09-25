@@ -37,11 +37,18 @@ EOF
 
 cat >"$FAKE_BIN/curl" <<'EOF'
 #!/usr/bin/env bash
-printf '%s\n' 'setup.sh unexpectedly attempted to install NVM' >&2
-exit 99
+printf '%s\n' "$*" >>"$HOME/curl-calls"
+printf '%s\n' ':'
 EOF
 
-chmod +x "$FAKE_BIN/uvx" "$FAKE_BIN/pi" "$FAKE_BIN/curl"
+for executable in pnpm bun; do
+	cat >"$FAKE_BIN/$executable" <<'EOF'
+#!/usr/bin/env bash
+printf '%s\n' 'test version'
+EOF
+done
+
+chmod +x "$FAKE_BIN/uvx" "$FAKE_BIN/pi" "$FAKE_BIN/curl" "$FAKE_BIN/pnpm" "$FAKE_BIN/bun"
 
 HOME="$TEST_HOME" PATH="$FAKE_BIN:/usr/bin:/bin" bash "$REPO_ROOT/setup.sh"
 
@@ -53,4 +60,11 @@ done
 
 [[ ! -e "$TEST_HOME/.nvm" ]]
 
-printf '%s\n' 'setup node installation test passed'
+cat >"$TEST_ROOT/expected-curl-calls" <<'EOF'
+--retry 5 --retry-all-errors -fsSL https://get.pnpm.io/install.sh
+--retry 5 --retry-all-errors -fsSL https://bun.com/install
+EOF
+
+diff -u "$TEST_ROOT/expected-curl-calls" "$TEST_HOME/curl-calls"
+
+printf '%s\n' 'setup Node.js, pnpm, and Bun installation test passed'
