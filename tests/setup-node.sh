@@ -37,18 +37,21 @@ EOF
 
 cat >"$FAKE_BIN/curl" <<'EOF'
 #!/usr/bin/env bash
+set -euo pipefail
 printf '%s\n' "$*" >>"$HOME/curl-calls"
-printf '%s\n' ':'
+case "${!#}" in
+	https://get.pnpm.io/install.sh) destination="$HOME/.local/share/pnpm/bin/pnpm" ;;
+	https://bun.com/install) destination="$HOME/.bun/bin/bun" ;;
+	*) exit 99 ;;
+esac
+cat <<SCRIPT
+mkdir -p "$(dirname "$destination")"
+printf '%s\\n' '#!/usr/bin/env bash' "printf '%s\\n' 'test version'" >"$destination"
+chmod +x "$destination"
+SCRIPT
 EOF
 
-for executable in pnpm bun; do
-	cat >"$FAKE_BIN/$executable" <<'EOF'
-#!/usr/bin/env bash
-printf '%s\n' 'test version'
-EOF
-done
-
-chmod +x "$FAKE_BIN/uvx" "$FAKE_BIN/pi" "$FAKE_BIN/curl" "$FAKE_BIN/pnpm" "$FAKE_BIN/bun"
+chmod +x "$FAKE_BIN/uvx" "$FAKE_BIN/pi" "$FAKE_BIN/curl"
 
 HOME="$TEST_HOME" PATH="$FAKE_BIN:/usr/bin:/bin" bash "$REPO_ROOT/setup.sh"
 

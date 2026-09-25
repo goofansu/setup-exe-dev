@@ -24,7 +24,7 @@ curl --retry 5 --retry-all-errors -fsSL https://bun.com/install | bash
 
 export PNPM_HOME="$HOME/.local/share/pnpm"
 export BUN_INSTALL="$HOME/.bun"
-export PATH="$PNPM_HOME:$BUN_INSTALL/bin:$PATH"
+export PATH="$PNPM_HOME/bin:$BUN_INSTALL/bin:$PATH"
 hash -r
 
 pnpm --version
