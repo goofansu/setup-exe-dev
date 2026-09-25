@@ -41,8 +41,6 @@ chmod +x "$FAKE_BIN/pi" "$FAKE_BIN/uvx"
 
 HOME="$TEST_HOME" PATH="$FAKE_BIN:/usr/bin:/bin" bash "$REPO_ROOT/setup.sh"
 
-cmp "$REPO_ROOT/config/pi/keybindings.json" "$TEST_HOME/.pi/agent/keybindings.json"
-
 cat >"$TEST_ROOT/expected-pi-calls" <<'EOF'
 install npm:@goofansu/pi-stuff
 install npm:@goofansu/pi-subagent
@@ -54,7 +52,7 @@ cat >"$TEST_ROOT/expected-npx-calls" <<'EOF'
 skills add goofansu/skills/skills/engineering -a pi -g -y
 skills add mattpocock/skills/skills/engineering -a pi -g -y
 skills add mattpocock/skills/skills/productivity -a pi -g -y
-skills add humanlayer/skills -s show-me -a pi -g -y
+skills add humanlayer/skills -s show-me -s visual-pr -a pi -g -y
 skills add herdrdev/herdr -s herdr -a pi -g -y
 EOF
 

@@ -24,10 +24,6 @@ hash -r
 node --version
 npm --version
 
-# Install Pi configuration.
-mkdir -p "$HOME/.pi/agent"
-install -m 0644 "$SCRIPT_DIR/config/pi/keybindings.json" "$HOME/.pi/agent/keybindings.json"
-
 # Install Pi extensions.
 pi install npm:@goofansu/pi-stuff
 pi install npm:@goofansu/pi-subagent
