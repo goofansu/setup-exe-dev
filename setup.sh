@@ -41,6 +41,7 @@ npx --yes skills add goofansu/skills/skills/engineering -a pi -g -y
 npx --yes skills add mattpocock/skills/skills/engineering -a pi -g -y
 npx --yes skills add mattpocock/skills/skills/productivity -a pi -g -y
 npx --yes skills add humanlayer/skills -s show-me -s visual-pr -a pi -g -y
+npx --yes skills add mitsuhiko/agent-stuff -s librarian -a pi -g -y
 npx --yes skills add herdrdev/herdr -s herdr -a pi -g -y
 
 printf '%s\n' 'Setup complete.'
