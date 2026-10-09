@@ -74,7 +74,6 @@ diff -u "$TEST_ROOT/expected-curl-calls" "$TEST_HOME/curl-calls"
 cat >"$TEST_ROOT/expected-pi-calls" <<'EOF'
 install npm:@goofansu/pi-stuff
 install npm:@goofansu/pi-web
-install npm:pi-autoresearch
 EOF
 
 diff -u "$TEST_ROOT/expected-pi-calls" "$TEST_HOME/pi-calls"
