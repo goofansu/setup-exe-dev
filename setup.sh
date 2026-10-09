@@ -32,7 +32,6 @@ bun --version
 
 # Install Pi extensions.
 pi install npm:@goofansu/pi-stuff
-pi install npm:@goofansu/pi-subagent
 pi install npm:@goofansu/pi-web
 pi install npm:pi-autoresearch
 

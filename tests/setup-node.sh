@@ -32,7 +32,8 @@ EOF
 
 cat >"$FAKE_BIN/pi" <<'EOF'
 #!/usr/bin/env bash
-exit 0
+set -euo pipefail
+printf '%s\n' "$*" >>"$HOME/pi-calls"
 EOF
 
 cat >"$FAKE_BIN/curl" <<'EOF'
@@ -70,4 +71,12 @@ EOF
 
 diff -u "$TEST_ROOT/expected-curl-calls" "$TEST_HOME/curl-calls"
 
-printf '%s\n' 'setup Node.js, pnpm, and Bun installation test passed'
+cat >"$TEST_ROOT/expected-pi-calls" <<'EOF'
+install npm:@goofansu/pi-stuff
+install npm:@goofansu/pi-web
+install npm:pi-autoresearch
+EOF
+
+diff -u "$TEST_ROOT/expected-pi-calls" "$TEST_HOME/pi-calls"
+
+printf '%s\n' 'setup Node.js, pnpm, Bun, and Pi extension installation test passed'
