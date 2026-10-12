@@ -31,7 +31,6 @@ pnpm --version
 bun --version
 
 # Install Pi extensions.
-pi install npm:@goofansu/pi-stuff
 pi install npm:@goofansu/pi-web
 
 # Install Pi skills.
