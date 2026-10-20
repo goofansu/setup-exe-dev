@@ -38,6 +38,7 @@ wt --version
 
 # Install Pi extensions.
 pi install npm:@goofansu/pi-web
+pi install npm:@goofansu/pi-stuff
 
 # Install Pi skills.
 npx --yes skills add goofansu/skills/skills/engineering -a pi -g -y
