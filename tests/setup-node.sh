@@ -47,11 +47,11 @@ case "${!#}" in
 	https://bun.com/install) destination="$HOME/.bun/bin/bun" ;;
 	https://github.com/max-sixty/worktrunk/releases/latest/download/worktrunk-installer.sh)
 		cat <<'SCRIPT'
-[ "$WORKTRUNK_INSTALL_DIR" = "$HOME/.local/bin" ] || exit 1
+# Match the upstream installer's cargo-home layout: the prefix gets /bin.
 [ "$INSTALLER_NO_MODIFY_PATH" = 1 ] || exit 1
-mkdir -p "$WORKTRUNK_INSTALL_DIR"
-printf '%s\n' '#!/usr/bin/env bash' "printf '%s\\n' 'wt test version'" >"$WORKTRUNK_INSTALL_DIR/wt"
-chmod +x "$WORKTRUNK_INSTALL_DIR/wt"
+mkdir -p "$WORKTRUNK_INSTALL_DIR/bin"
+printf '%s\n' '#!/usr/bin/env bash' "printf '%s\\n' 'wt test version'" >"$WORKTRUNK_INSTALL_DIR/bin/wt"
+chmod +x "$WORKTRUNK_INSTALL_DIR/bin/wt"
 SCRIPT
 		exit 0
 		;;

@@ -30,9 +30,9 @@ hash -r
 pnpm --version
 bun --version
 
-# Install Worktrunk into the existing executable path.
+# Worktrunk appends /bin to its install prefix; keep binaries in ~/.local/bin.
 curl --retry 5 --retry-all-errors -fsSL https://github.com/max-sixty/worktrunk/releases/latest/download/worktrunk-installer.sh |
-	WORKTRUNK_INSTALL_DIR="$HOME/.local/bin" INSTALLER_NO_MODIFY_PATH=1 sh
+	WORKTRUNK_INSTALL_DIR="$HOME/.local" INSTALLER_NO_MODIFY_PATH=1 sh
 hash -r
 wt --version
 
