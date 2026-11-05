@@ -91,4 +91,13 @@ EOF
 
 diff -u "$TEST_ROOT/expected-pi-calls" "$TEST_HOME/pi-calls"
 
+colorterm_in_shell() {
+	HOME="$TEST_HOME" TERM="$1" COLORTERM= bash -c '. "$HOME/.bashrc"; printf %s "${COLORTERM-}"'
+}
+[[ "$(colorterm_in_shell xterm-rex)" == truecolor ]]
+[[ -z "$(colorterm_in_shell xterm-256color)" ]]
+
+HOME="$TEST_HOME" PATH="$FAKE_BIN:/usr/bin:/bin" bash "$REPO_ROOT/setup.sh" >/dev/null
+[[ "$(grep -c COLORTERM "$TEST_HOME/.bashrc")" == 1 ]]
+
 printf '%s\n' 'setup Node.js, pnpm, Bun, Worktrunk, and Pi extension installation test passed'

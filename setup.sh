@@ -47,4 +47,9 @@ npx --yes skills add humanlayer/skills -s show-me -a pi -g -y
 npx --yes skills add mitsuhiko/agent-stuff -s librarian -a pi -g -y
 npx --yes skills add herdrdev/herdr -s herdr -a pi -g -y
 
+# SSH drops COLORTERM, so tools fall back to 16 colors under TERM=xterm-rex.
+COLORTERM_LINE='[ "$TERM" = xterm-rex ] && export COLORTERM=truecolor'
+touch "$HOME/.bashrc"
+grep -qxF "$COLORTERM_LINE" "$HOME/.bashrc" || printf '%s\n' "$COLORTERM_LINE" >>"$HOME/.bashrc"
+
 printf '%s\n' 'Setup complete.'
