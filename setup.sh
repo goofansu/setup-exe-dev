@@ -21,6 +21,12 @@ hash -r
 node --version
 npm --version
 
+# Install agent-browser and expose it outside the Node environment.
+npm install --global agent-browser@0.41.2
+ln -sfn "$HOME/node/bin/agent-browser" "$HOME/.local/bin/agent-browser"
+hash -r
+agent-browser --version
+
 # Install pnpm and Bun as standalone executables.
 curl --retry 5 --retry-all-errors -fsSL https://get.pnpm.io/install.sh | sh -
 curl --retry 5 --retry-all-errors -fsSL https://bun.com/install | bash
