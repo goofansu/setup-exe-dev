@@ -9,6 +9,12 @@ TEST_HOME="$TEST_ROOT/home"
 FAKE_BIN="$TEST_ROOT/bin"
 mkdir -p "$TEST_HOME" "$FAKE_BIN"
 
+cat >"$FAKE_BIN/sudo" <<'EOF'
+#!/usr/bin/env bash
+set -euo pipefail
+printf '%s\n' "$*" >>"$HOME/sudo-calls"
+EOF
+
 cat >"$FAKE_BIN/uvx" <<'EOF'
 #!/usr/bin/env bash
 set -euo pipefail
@@ -64,9 +70,12 @@ chmod +x "$destination"
 SCRIPT
 EOF
 
-chmod +x "$FAKE_BIN/uvx" "$FAKE_BIN/pi" "$FAKE_BIN/curl"
+chmod +x "$FAKE_BIN/sudo" "$FAKE_BIN/uvx" "$FAKE_BIN/pi" "$FAKE_BIN/curl"
 
 HOME="$TEST_HOME" PATH="$FAKE_BIN:/usr/bin:/bin" bash "$REPO_ROOT/setup.sh"
+
+printf '%s\n' 'apt install -y fonts-noto-core' >"$TEST_ROOT/expected-sudo-calls"
+diff -u "$TEST_ROOT/expected-sudo-calls" "$TEST_HOME/sudo-calls"
 
 for executable in node npm npx; do
 	link="$TEST_HOME/.local/bin/$executable"
@@ -100,4 +109,4 @@ colorterm_in_shell() {
 HOME="$TEST_HOME" PATH="$FAKE_BIN:/usr/bin:/bin" bash "$REPO_ROOT/setup.sh" >/dev/null
 [[ "$(grep -c COLORTERM "$TEST_HOME/.bashrc")" == 1 ]]
 
-printf '%s\n' 'setup Node.js, pnpm, Bun, Worktrunk, and Pi extension installation test passed'
+printf '%s\n' 'setup fonts, Node.js, pnpm, Bun, Worktrunk, and Pi extension installation test passed'

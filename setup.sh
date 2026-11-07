@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Provide fallback fonts for Tailwind CSS projects in agent-browser screenshots.
+sudo apt install -y fonts-noto-core
+
 # Install the latest Node.js LTS release.
 export PATH="$HOME/.local/bin:$PATH"
 NODE_ENV="$HOME/node"
