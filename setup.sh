@@ -22,7 +22,7 @@ node --version
 npm --version
 
 # Install agent-browser and expose it outside the Node environment.
-npm install --global agent-browser@0.41.2
+npm install --global agent-browser@0.43.0
 ln -sfn "$HOME/node/bin/agent-browser" "$HOME/.local/bin/agent-browser"
 hash -r
 agent-browser --version
@@ -38,12 +38,6 @@ hash -r
 
 pnpm --version
 bun --version
-
-# Worktrunk appends /bin to its install prefix; keep binaries in ~/.local/bin.
-curl --retry 5 --retry-all-errors -fsSL https://github.com/max-sixty/worktrunk/releases/latest/download/worktrunk-installer.sh |
-	WORKTRUNK_INSTALL_DIR="$HOME/.local" INSTALLER_NO_MODIFY_PATH=1 sh
-hash -r
-wt --version
 
 # Install Pi extensions.
 pi install npm:@goofansu/pi-web
