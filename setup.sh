@@ -39,6 +39,12 @@ hash -r
 pnpm --version
 bun --version
 
+# Worktrunk appends /bin to its install prefix; keep binaries in ~/.local/bin.
+curl --retry 5 --retry-all-errors -fsSL https://github.com/max-sixty/worktrunk/releases/latest/download/worktrunk-installer.sh |
+	WORKTRUNK_INSTALL_DIR="$HOME/.local" INSTALLER_NO_MODIFY_PATH=1 sh
+hash -r
+wt --version
+
 # Install Pi extensions.
 pi install npm:@goofansu/pi-web
 pi install npm:@goofansu/pi-stuff
@@ -47,6 +53,10 @@ pi install npm:@goofansu/pi-stuff
 npx --yes skills add mattpocock/skills/skills/engineering -a pi -g -y
 npx --yes skills add mattpocock/skills/skills/productivity -a pi -g -y
 npx --yes skills add mitsuhiko/agent-stuff -s librarian -a pi -g -y
+
+# Install Claude Code plugins.
+claude plugin install mattpocock-skills
+claude plugin install worktrunk --marketplace max-sixty/worktrunk
 
 # SSH drops COLORTERM, so tools fall back to 16 colors under TERM=xterm-rex.
 COLORTERM_LINE='[ "$TERM" = xterm-rex ] && export COLORTERM=truecolor'

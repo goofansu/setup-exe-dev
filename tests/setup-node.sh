@@ -50,7 +50,24 @@ EOF
 cat >"$FAKE_BIN/pi" <<'EOF'
 #!/usr/bin/env bash
 set -euo pipefail
+[[ -x "$HOME/.local/bin/wt" ]]
+[[ "$(command -v wt)" == "$HOME/.local/bin/wt" ]]
 printf '%s\n' "$*" >>"$HOME/pi-calls"
+EOF
+
+cat >"$FAKE_BIN/claude" <<'EOF'
+#!/usr/bin/env bash
+set -euo pipefail
+printf '%s\n' "$*" >>"$HOME/claude-calls"
+EOF
+
+# Match the upstream installer's cargo-home layout: the prefix gets /bin.
+export FAKE_WORKTRUNK_INSTALLER="$TEST_ROOT/fake-worktrunk-installer"
+cat >"$FAKE_WORKTRUNK_INSTALLER" <<'EOF'
+[ "$INSTALLER_NO_MODIFY_PATH" = 1 ] || exit 1
+mkdir -p "$WORKTRUNK_INSTALL_DIR/bin"
+printf '%s\n' '#!/usr/bin/env bash' 'echo wt test version' >"$WORKTRUNK_INSTALL_DIR/bin/wt"
+chmod +x "$WORKTRUNK_INSTALL_DIR/bin/wt"
 EOF
 
 cat >"$FAKE_BIN/curl" <<'EOF'
@@ -60,6 +77,7 @@ printf '%s\n' "$*" >>"$HOME/curl-calls"
 case "${!#}" in
 	https://get.pnpm.io/install.sh) destination="$HOME/.local/share/pnpm/bin/pnpm" ;;
 	https://bun.com/install) destination="$HOME/.bun/bin/bun" ;;
+	*/worktrunk-installer.sh) exec cat "$FAKE_WORKTRUNK_INSTALLER" ;;
 	*) exit 99 ;;
 esac
 cat <<SCRIPT
@@ -69,7 +87,7 @@ chmod +x "$destination"
 SCRIPT
 EOF
 
-chmod +x "$FAKE_BIN/sudo" "$FAKE_BIN/uvx" "$FAKE_BIN/pi" "$FAKE_BIN/curl"
+chmod +x "$FAKE_BIN/sudo" "$FAKE_BIN/uvx" "$FAKE_BIN/pi" "$FAKE_BIN/claude" "$FAKE_BIN/curl"
 
 HOME="$TEST_HOME" PATH="$FAKE_BIN:/usr/bin:/bin" bash "$REPO_ROOT/setup.sh"
 
@@ -94,6 +112,7 @@ agent_browser_link="$TEST_HOME/.local/bin/agent-browser"
 cat >"$TEST_ROOT/expected-curl-calls" <<'EOF'
 --retry 5 --retry-all-errors -fsSL https://get.pnpm.io/install.sh
 --retry 5 --retry-all-errors -fsSL https://bun.com/install
+--retry 5 --retry-all-errors -fsSL https://github.com/max-sixty/worktrunk/releases/latest/download/worktrunk-installer.sh
 EOF
 
 diff -u "$TEST_ROOT/expected-curl-calls" "$TEST_HOME/curl-calls"
@@ -105,6 +124,12 @@ EOF
 
 diff -u "$TEST_ROOT/expected-pi-calls" "$TEST_HOME/pi-calls"
 
+cat >"$TEST_ROOT/expected-claude-calls" <<'EOF'
+plugin install mattpocock-skills
+plugin install worktrunk --marketplace max-sixty/worktrunk
+EOF
+diff -u "$TEST_ROOT/expected-claude-calls" "$TEST_HOME/claude-calls"
+
 colorterm_in_shell() {
 	HOME="$TEST_HOME" TERM="$1" COLORTERM= bash -c '. "$HOME/.bashrc"; printf %s "${COLORTERM-}"'
 }
@@ -114,4 +139,4 @@ colorterm_in_shell() {
 HOME="$TEST_HOME" PATH="$FAKE_BIN:/usr/bin:/bin" bash "$REPO_ROOT/setup.sh" >/dev/null
 [[ "$(grep -c COLORTERM "$TEST_HOME/.bashrc")" == 1 ]]
 
-printf '%s\n' 'setup fonts, Node.js, agent-browser, pnpm, Bun, and Pi extension installation test passed'
+printf '%s\n' 'setup fonts, Node.js, agent-browser, pnpm, Bun, Worktrunk, Pi extension, and Claude plugin installation test passed'
