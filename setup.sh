@@ -46,9 +46,7 @@ pi install npm:@goofansu/pi-stuff
 # Install Pi skills.
 npx --yes skills add mattpocock/skills/skills/engineering -a pi -g -y
 npx --yes skills add mattpocock/skills/skills/productivity -a pi -g -y
-npx --yes skills add humanlayer/skills -s show-me -a pi -g -y
 npx --yes skills add mitsuhiko/agent-stuff -s librarian -a pi -g -y
-npx --yes skills add herdrdev/herdr -s herdr -a pi -g -y
 
 # SSH drops COLORTERM, so tools fall back to 16 colors under TERM=xterm-rex.
 COLORTERM_LINE='[ "$TERM" = xterm-rex ] && export COLORTERM=truecolor'
